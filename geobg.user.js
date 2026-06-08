@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         geobg
 // @namespace    local.geoduels.custom-main-menu-background
-// @version      0.2.0
+// @version      0.2.1
 // @description  Adds a tiny local image-bubble picker for the GeoDuels main menu background.
 // @author       fketa
 // @match        https://geoduels.io/*
@@ -288,6 +288,17 @@
       "  z-index: 2147483647;",
       "  width: " + BUBBLE_SIZE + "px;",
       "  height: " + BUBBLE_SIZE + "px;",
+      "  opacity: 1;",
+      "  pointer-events: auto;",
+      "  transform: scale(1);",
+      "  transform-origin: center;",
+      "  transition: opacity 180ms ease, transform 220ms cubic-bezier(.2,1.35,.35,1), filter 180ms ease;",
+      "}",
+      "html.game-active #" + ROOT_ID + " {",
+      "  opacity: 0;",
+      "  pointer-events: none;",
+      "  transform: scale(.55);",
+      "  filter: blur(2px);",
       "}",
       "#" + ROOT_ID + " * { box-sizing: border-box; }",
       "#" + ROOT_ID + " .geoduels-menu-bg-bubble {",
@@ -463,7 +474,7 @@
 
   function handleFile(file) {
     if (!file || !/^image\//i.test(file.type)) {
-      console.warn("[geodih-menu-bg] choose an image file");
+      console.warn("[geoduels-menu-bg] choose an image file");
       return;
     }
 
@@ -478,7 +489,7 @@
         saveSettings({ imageUrl: dataUrl, source: "upload" });
       })
       .catch(function (error) {
-        console.warn("[geodih-menu-bg] upload failed", error);
+        console.warn("[geoduels-menu-bg] upload failed", error);
       });
   }
 
